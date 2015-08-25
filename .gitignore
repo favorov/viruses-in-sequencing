@@ -14,3 +14,4 @@ chr*.fasta
 *.bam
 *.fq
 *.gz
+*.ebwt
