@@ -1,0 +1,18 @@
+The file contains pairs of fasta names: first is along name from
+viral.genomes.mp205.v012813.fasta, and the seocn is the short name we use for
+the human+virus genomes
+
+>gi|310698439|ref|NC_001526.2| Human papillomavirus type 16, complete genome
+>hpv16
+
+>gi|492936|emb|A12360.1| complete nucleotide sequence of HPV-33
+>hpv33
+
+>gi|333050|gb|M74117.1|PPH35CG Human papillomavirus type 35 complete genome
+>hpv35
+
+>gi|139424470|ref|NC_009334.1| Human herpesvirus 4, complete genome
+>hhv4
+
+>gi|82503188|ref|NC_007605.1| Human herpesvirus 4 type 1, complete genome
+>hhv4t1
