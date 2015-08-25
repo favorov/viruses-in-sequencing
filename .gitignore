@@ -1,0 +1,16 @@
+**/cache/**
+.Rdata
+.Rhistory
+*.rda
+*.Rda
+*.Rdata
+*~
+*.swp
+.*
+archive/*
+chr*.fa
+chr*.fasta
+*.sam
+*.bam
+*.fq
+*.gz
