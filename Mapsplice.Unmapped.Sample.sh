@@ -16,7 +16,7 @@ folder=${1}
 pushd $folder > /dev/null
 
 echo "started looking for HPV and EBV in folder $folder"
-scripthome = $(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
+scripthome=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 touch mapsplice.unmapped.start.timestamp.txt
 virexbase=$scripthome/Chimeric.Genomes
