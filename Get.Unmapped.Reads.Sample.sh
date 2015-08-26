@@ -8,22 +8,33 @@ module load sharedapps
 module load samtools
 module load bedtools
 
-folder=${1-'./DGay10-26144'}
+source_folder=${1}
+[[ ! $source_folder = *\/ ]] && source_folder=${source_folder}/
+#if source_folder is not given with / add it
+alignemntssam=${source_folder}alignments.sam
 
-pushd $folder
+folder=${2}
+[[ ! $folder = *\/ ]] && folder=${folder}/
+#if folder is not given with / add it
+#folder is the working folder
 
-echo "started looking for unmapped in folder $folder"
+echo "started looking for unmapped; the source folder is $source_folder; the work folder is $folder"
+
+mkdir -p $folder
+#if not exists, create, otherwise, do nothing, no error
+
+pushd $folder >/dev/null
 
 touch GetUnmappeReads.sample.start.timestamp.txt
 
 # extract unmapped reads
-samtools view -bhS -f 4 -F 256 alignments.sam > unmapped4.unsorted.bam
+samtools view -bhS -f 4 -F 256  $alignemntssam> unmapped4.unsorted.bam
 
 # sort bam file
 samtools sort -n unmapped4.unsorted.bam unmapped4
 
 # extract reads with unmapped mate
-samtools view -bhS -f 8 -F256 alignments.sam > unmapped8.unsorted.bam
+samtools view -bhS -f 8 -F256 $alignemntssam > unmapped8.unsorted.bam
 
 # sort bam file
 samtools sort -n unmapped8.unsorted.bam unmapped8
@@ -47,7 +58,8 @@ bedtools bamtofastq -i uniunmapped.bam -fq unmapped1.fq -fq2 unmapped2.fq 2> bam
 
 mkdir unmapped-search-intermediates
 touch GetUnmappeReads.sample.stop.timestamp.txt
-mv un*am bamtofastq.err GetUnmappeReads.sample.*.timestamp.txt unmapped-search-intermediates
+mv uniunmapped.bam bamtofastq.err GetUnmappeReads.sample.*.timestamp.txt unmapped-search-intermediates
+
+popd > /dev/null 
 
 echo 'done..' 
-popd > /dev/null 
