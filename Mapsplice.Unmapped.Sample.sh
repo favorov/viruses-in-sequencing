@@ -7,7 +7,9 @@
 
 module load sharedapps
 module load python2.7/2.7.6
+module load bowtie/1.1.1
 
+scripthome=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
 virexbase=$scripthome/Chimeric.Genomes
 mapsplice=~/Mapsplice/MapSplice-v2.2.0/mapsplice.py
 
@@ -19,7 +21,6 @@ folder=${1}
 pushd $folder > /dev/null
 
 echo "started looking for HPV and EBV in folder $folder"
-scripthome=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 touch mapsplice.unmapped.start.timestamp.txt
 
