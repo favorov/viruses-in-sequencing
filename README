@@ -1,7 +1,8 @@
-This is a pipeline that tes virus integration/expression in RNAseq data using mapsplice. The main MapSplice data is supposed to finosh already. It aligned the RNASeq to the human genome. The results is the alignment.sam file in the 'source' folder.
+This is a pipeline that test virus integration/expression in RNAseq data using MapSplice. The main MapSplice data is supposed to finish already. It aligned the RNASeq to the human genome. The results is the alignment.sam file in the 'source' folder.
 
 Then, GetUnmappedReads.sample.sh applied for each samplme extracts the umpapped reads and the mated of unmapped reads. Then it creates unmapped1.fq and unmapped.2.fq for the paires that are not completely mapped. It puts the files in the home folder of the sample the is possibly early created by the infrastructure.
 
-Then, another maplice run is done on the unmapped files and on chimeric genomes.It happes in Mapsplice.Unmapped.Sample.sh
+Then, another MapSlice run is done on the unmapped files and on chimeric genomes.It happes in Mapsplice.Unmapped.Sample.sh
 
-The chimeric genomes are bowtie-indexed collections that contain all the human chromosomes and some viral genomes as additional chromosomes.:
+The chimeric genomes are bowtie-indexed collections that contain all the human chromosomes and some viral genomes as additional chromosomes.
+
