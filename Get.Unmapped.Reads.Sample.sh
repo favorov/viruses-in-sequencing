@@ -20,46 +20,51 @@ folder=${2}
 
 echo "started looking for unmapped; the source folder is $source_folder; the work folder is $folder"
 
-mkdir -p $folder
-#if not exists, create, otherwise, do nothing, no error
+if [! -f $folder/unmapped-search-intermediates/GetUnmappeReads.sample.stop.timestamp.txt ]
+then
+	mkdir -p $folder
+	#if not exists, create, otherwise, do nothing, no error
 
-pushd $folder >/dev/null
+	pushd $folder >/dev/null
 
-touch GetUnmappeReads.sample.start.timestamp.txt
+	touch GetUnmappeReads.sample.start.timestamp.txt
 
-# extract unmapped reads
-samtools view -bhS -f 4 -F 256  $alignemntssam> unmapped4.unsorted.bam
+	# extract unmapped reads
+	samtools view -bhS -f 4 -F 256  $alignemntssam> unmapped4.unsorted.bam
 
-# sort bam file
-samtools sort -n unmapped4.unsorted.bam unmapped4
+	# sort bam file
+	samtools sort -n unmapped4.unsorted.bam unmapped4
 
-# extract reads with unmapped mate
-samtools view -bhS -f 8 -F256 $alignemntssam > unmapped8.unsorted.bam
+	# extract reads with unmapped mate
+	samtools view -bhS -f 8 -F256 $alignemntssam > unmapped8.unsorted.bam
 
-# sort bam file
-samtools sort -n unmapped8.unsorted.bam unmapped8
+	# sort bam file
+	samtools sort -n unmapped8.unsorted.bam unmapped8
 
-#merge them
-samtools merge -n unmapped.bam unmapped4.bam unmapped8.bam
+	#merge them
+	samtools merge -n unmapped.bam unmapped4.bam unmapped8.bam
 
-#leave uniq lines only and stripe /1 and /2 at the ends of the names _after_ that 
-#the crazy sed sequnce is: for anyn ninspace sequence in the begin of the line, stripe /1 or /2
-#just striping all /1 and /2 is worse, it can be in quality string
-samtools view -h unmapped.bam | uniq |  sed -e 's/\/[12]//' > uniunmapped.sam
-samtools view -Sb uniunmapped.sam > uniunmapped.bam
+	#leave uniq lines only and stripe /1 and /2 at the ends of the names _after_ that 
+	#the crazy sed sequnce is: for anyn ninspace sequence in the begin of the line, stripe /1 or /2
+	#just striping all /1 and /2 is worse, it can be in quality string
+	samtools view -h unmapped.bam | uniq |  sed -e 's/\/[12]//' > uniunmapped.sam
+	samtools view -Sb uniunmapped.sam > uniunmapped.bam
 
 
-# convert to fastq files for paired end reads to run mapsplice
-bedtools bamtofastq -i uniunmapped.bam -fq unmapped1.fq -fq2 unmapped2.fq 2> bamtofastq.err 
+	# convert to fastq files for paired end reads to run mapsplice
+	bedtools bamtofastq -i uniunmapped.bam -fq unmapped1.fq -fq2 unmapped2.fq 2> bamtofastq.err 
 
-# run mapsplice
-# model after Mapsplice_Sample.sh
-# get counts
+	# run mapsplice
+	# model after Mapsplice_Sample.sh
+	# get counts
 
-mkdir unmapped-search-intermediates
-touch GetUnmappeReads.sample.stop.timestamp.txt
-mv uniunmapped.bam bamtofastq.err GetUnmappeReads.sample.*.timestamp.txt unmapped-search-intermediates
+	mkdir unmapped-search-intermediates
+	touch GetUnmappeReads.sample.stop.timestamp.txt
+	mv uniunmapped.bam bamtofastq.err GetUnmappeReads.sample.*.timestamp.txt unmapped-search-intermediates
 
-popd > /dev/null 
+	popd > /dev/null 
 
-echo 'done..' 
+	echo 'done..'
+else
+	echo 'It was already done..'
+fi
