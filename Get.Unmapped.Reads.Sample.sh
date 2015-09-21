@@ -20,14 +20,14 @@ folder=${2}
 
 echo "started looking for unmapped; the source folder is $source_folder; the work folder is $folder"
 
-if [! -f $folder/unmapped-search-intermediates/GetUnmappeReads.sample.stop.timestamp.txt ]
+if [! -f $folder/timestamp.get.unmapped.reads.sample.stop.txt ]
 then
 	mkdir -p $folder
 	#if not exists, create, otherwise, do nothing, no error
 
 	pushd $folder >/dev/null
 
-	touch GetUnmappeReads.sample.start.timestamp.txt
+	touch timestamp.get.unmapped.reads.sample.start.txt
 
 	# extract unmapped reads
 	samtools view -bhS -f 4 -F 256  $alignemntssam> unmapped4.unsorted.bam
@@ -66,9 +66,9 @@ then
 	# get counts
 
 	mkdir unmapped-search-intermediates
-	touch GetUnmappeReads.sample.stop.timestamp.txt
-	mv uniunmapped.bam bamtofastq.err GetUnmappeReads.sample.*.timestamp.txt unmapped-search-intermediates
+	mv uniunmapped.bam bamtofastq.err unmapped-search-intermediates
 
+	touch timestamp.get.unmapped.reads.sample.stop.txt
 	popd > /dev/null 
 
 	echo 'done..'
