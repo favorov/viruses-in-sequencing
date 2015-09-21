@@ -19,17 +19,27 @@ folder=${1}
 #if folder is not given with / add it
 #folder is the working folder
 
-pushd $folder > /dev/null
+#folder is to exist on that stage
+
 
 echo "started looking for HPV and EBV in folder $folder"
 
-touch mapsplice.unmapped.start.timestamp.txt
+if [! -f $folder/mapsplice.unmapped.stop.timestamp.txt ]
+then
+	touch mapsplice.unmapped.start.timestamp.txt
 
-mkdir -p virus-findings
-#if not exists, create, otherwise, do nothing, no error
+	pushd $folder > /dev/null
+	
+	mkdir -p virus-findings
+	#if not exists, create, otherwise, do nothing, no error
 
-python2 $mapsplice --fusion-non-canonical -o virus-findings/ -c $chimereref -x $chimereref/$indexname -1 unmapped1.fq -2 unmapped2.fq touch mapsplice.unmapped.stop.timestamp.txt
+	python2 $mapsplice --fusion-non-canonical -o virus-findings/ -c $chimereref -x $chimereref/$indexname -1 unmapped1.fq -2 unmapped2.fq 
 
-echo 'done..' 
-popd > /dev/null 
+	touch mapsplice.unmapped.stop.timestamp.txt
+
+	echo 'done..' 
+	popd > /dev/null 
+else
+	echo 'It was already done before..'
+fi
 
