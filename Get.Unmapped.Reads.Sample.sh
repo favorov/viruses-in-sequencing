@@ -34,22 +34,29 @@ then
 
 	# sort bam file
 	samtools sort -n unmapped4.unsorted.bam unmapped4
-
+	#clean
+	unlink unmapped4.unsorted.bam
 	# extract reads with unmapped mate
 	samtools view -bhS -f 8 -F256 $alignemntssam > unmapped8.unsorted.bam
 
 	# sort bam file
 	samtools sort -n unmapped8.unsorted.bam unmapped8
+	#clean
+	unlink unmapped8.unsorted.bam
 
 	#merge them
 	samtools merge -n unmapped.bam unmapped4.bam unmapped8.bam
-
+	#clean
+	unlink unmapped4.bam unmapped8.bam
 	#leave uniq lines only and stripe /1 and /2 at the ends of the names _after_ that 
 	#the crazy sed sequnce is: for anyn ninspace sequence in the begin of the line, stripe /1 or /2
 	#just striping all /1 and /2 is worse, it can be in quality string
 	samtools view -h unmapped.bam | uniq |  sed -e 's/\/[12]//' > uniunmapped.sam
+	#clean
+	unlink unmapped.bam
 	samtools view -Sb uniunmapped.sam > uniunmapped.bam
-
+	#clean
+	unlink uniunmapped.sam 
 
 	# convert to fastq files for paired end reads to run mapsplice
 	bedtools bamtofastq -i uniunmapped.bam -fq unmapped1.fq -fq2 unmapped2.fq 2> bamtofastq.err 
@@ -66,5 +73,5 @@ then
 
 	echo 'done..'
 else
-	echo 'It was already done..'
+	echo 'It was already done before..'
 fi
