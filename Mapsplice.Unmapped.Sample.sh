@@ -14,7 +14,9 @@ chimereref=$scripthome/Chimeric.Genomes/hg19+HPV+EBV
 indexname=hg19+hpv+ebv
 mapsplice=~/Mapsplice/MapSplice-v2.2.0/mapsplice.py
 
-folder=${1}
+folder=${folder-$1}
+#folder is to be passed by -v option to qsub or set by other method
+#if it is not, we try ${1}
 [[ ! $folder = *\/ ]] && folder=${folder}/
 #if folder is not given with / add it
 #folder is the working folder

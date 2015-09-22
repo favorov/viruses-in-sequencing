@@ -8,17 +8,22 @@ module load sharedapps
 module load samtools
 module load bedtools
 
-source_folder=${1}
-[[ ! $source_folder = *\/ ]] && source_folder=${source_folder}/
-#if source_folder is not given with / add it
-alignemntssam=${source_folder}alignments.sam
-
-folder=${2}
+folder=${folder-$1}
+#folder is to be passed by -v option to qsub or set by other method
+#if it is not, we try ${1}
 [[ ! $folder = *\/ ]] && folder=${folder}/
 #if folder is not given with / add it
 #folder is the working folder
 
-echo "started looking for unmapped; the source folder is $source_folder; the work folder is $folder"
+source_folder=${source_folder-${2-$folder}}
+#source_folder is to be passed by -v option to qsub or set by other method
+#if it is not, we try ${2} - and, if not, we happily use $folder
+[[ ! $source_folder = *\/ ]] && source_folder=${source_folder}/
+#if source_folder is not given with / add it
+alignemntssam=${source_folder}alignments.sam
+
+
+echo "started looking for unmapped;  the work folder is $folder; the ailgnments.sam (source) source folder is $source_folder;"
 
 if [! -f $folder/timestamp.get.unmapped.reads.sample.stop.txt ]
 then
