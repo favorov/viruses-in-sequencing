@@ -25,7 +25,7 @@ alignemntssam=${source_folder}alignments.sam
 
 echo "started looking for unmapped;  the work folder is $folder; the ailgnments.sam (source) source folder is $source_folder;"
 
-if [! -f $folder/timestamp.get.unmapped.reads.sample.stop.txt ]
+if [ ! -f $folder/timestamp.get.unmapped.reads.sample.stop.txt ]
 then
 	mkdir -p $folder
 	#if not exists, create, otherwise, do nothing, no error

@@ -26,7 +26,7 @@ folder=${folder-$1}
 
 echo "started looking for HPV and EBV in folder $folder"
 
-if [! -f $folder/mapsplice.unmapped.stop.timestamp.txt ]
+if [ ! -f $folder/mapsplice.unmapped.stop.timestamp.txt ]
 then
 	touch mapsplice.unmapped.start.timestamp.txt
 
