@@ -28,9 +28,9 @@ echo "started looking for HPV and EBV in folder $folder"
 
 if [ ! -f $folder/mapsplice.unmapped.stop.timestamp.txt ]
 then
-	touch mapsplice.unmapped.start.timestamp.txt
-
 	pushd $folder > /dev/null
+	
+	touch mapsplice.unmapped.start.timestamp.txt
 	
 	mkdir -p virus-findings
 	#if not exists, create, otherwise, do nothing, no error
