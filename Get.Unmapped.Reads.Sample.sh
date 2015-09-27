@@ -52,7 +52,8 @@ then
 	#merge them
 	samtools merge -n unmapped.bam unmapped4.bam unmapped8.bam
 	#clean
-	unlink unmapped4.bam unmapped8.bam
+	unlink unmapped4.bam 
+	unlink unmapped8.bam
 	#leave uniq lines only and stripe /1 and /2 at the ends of the names _after_ that 
 	#the crazy sed sequnce is: for anyn ninspace sequence in the begin of the line, stripe /1 or /2
 	#just striping all /1 and /2 is worse, it can be in quality string
