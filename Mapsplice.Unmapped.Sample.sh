@@ -20,7 +20,7 @@ folder=${folder-$1}
 
 #scripthome=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
 #it works only if script is started not by qrsh
-scripthome=${scripthome-${2-'~/viruses-in-RNA-seq'}}
+scripthome=${scripthome-${2-~/viruses-in-RNA-seq}}
 
 chimereref=$scripthome/Chimeric.Genomes/hg19+HPV+EBV
 indexname=hg19+hpv+ebv
