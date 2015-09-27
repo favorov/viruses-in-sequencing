@@ -1,1 +1,5 @@
-for dir in /home/elana/CalifanoHPVOP/DGay*; do echo $dir ${dir##*/};done
+#!/bin/bash
+for dir in /home/elana/CalifanoHPVOP/DGay*
+do
+	echo $dir ${dir##*/}
+done
