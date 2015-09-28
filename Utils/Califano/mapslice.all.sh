@@ -1,1 +1,9 @@
-qsub -v folder=../DGay10-26144 -N mapsplice.unmapped.DGay10-26144 ~/viruses-in-RNA-seq/Mapsplice.Unmapped.Sample.sh
+#!/bin/bash
+#we run it from the folder where all the DGay subfoders are
+for dir in DGay*
+do
+	echo $dir 
+	pushd $dir
+	qsub -v folder=. -N mapsplice.unmapped.$dir ~/viruses-in-RNA-seq/Mapsplice.Unmapped.Sample.sh
+	popd
+done
