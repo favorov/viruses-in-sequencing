@@ -14,7 +14,7 @@ folder=${folder-$1}
 [[ ! $folder = *\/ ]] && folder=${folder}/
 #if folder is not given with / add it
 #folder is the working folder
-echo "extracting viral reads, simplest way; the work folder is $foldervirus-findings"
+echo "extracting viral reads, simplest way; the work folder is ${folder}virus-findings"
 if [ ! -f ${folder}timestamp.extract.viral.reads.stop.txt ]
 then
 	#it is to exist at that moment
