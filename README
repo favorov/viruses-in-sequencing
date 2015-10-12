@@ -1,8 +1,10 @@
-This is a pipeline that test virus integration/expression in RNAseq data using MapSplice. The main MapSplice data is supposed to finish already. It aligned the RNASeq to the human genome. The results is the alignment.sam file in the 'source' folder.
+This is a pipeline that test virus integration/expression in RNAseq data using MapSplice. The main MapSplice data is supposed to finish already. It aligned the RNASeq to the human genome. The results is the alignment.sam file in the source folder that is named by the sample.
 
-Then, GetUnmappedReads.sample.sh applied for each samplme extracts the umpapped reads and the mated of unmapped reads. Then it creates unmapped1.fq and unmapped.2.fq for the paires that are not completely mapped. It puts the files in the home folder of the sample the is possibly early created by the infrastructure.
+Then, GetUnmappedReads.sample.sh applied for each samplme extracts the umpapped reads and the mated of unmapped reads. Then it creates unmapped1.fq and unmapped.2.fq for the paires that are not completely mapped. It puts the files in the home folder of the sample the is possibly early created by the infrastructure. GetUnmappedReads.sh uses $folder var to know where to run. A buchch of parallel runs for a set of samples are done by Utils/Califano/get.unmapped.all.sh
 
-Then, another MapSlice run is done on the unmapped files and on chimeric genomes.It happes in Mapsplice.Unmapped.Sample.sh
+Then, another MapSlice run (Mapsplice.Unmapped.Sample.sh) is done on the unmapped files and on chimeric genomes. The chimeric genomes are bowtie-indexed collections that contain all the human chromosomes and some viral genomes as additional chromosomes.
+They reside and indexed in Chimeric.Genomes folder. The run provides us with new alignments alignments.sam (now, with viruses) and fusions information in ${sample}/virus-findings. Mapsplice.Unmapped.Sample.sh uses $folder var to know where to run. A buchch of parallel runs for a set of samples are done by Utils/Califano/get.unmapped.all.sh
 
-The chimeric genomes are bowtie-indexed collections that contain all the human chromosomes and some viral genomes as additional chromosomes.
+integration.hpv.summary.sh analyse all the fusions_raw.txt and all the fusions_candidates.txt files in subfolders and list those that has hpv in fusions. There are the samples with integration.
 
+Extract.Viral.Reads.sh extracts all the reads that are mapped to the hpv* ir hhv* chromosomes to the viral_read.bam file in the virus-findings subfolder of the ${folder}. The runs are startes in parallel by the Utils\Califano\extract.viral.reads.sh
