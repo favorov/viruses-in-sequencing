@@ -39,7 +39,7 @@ then
  	LC_ALL=C grep -w -F -f viral_read.ids alignments.sam > viral_reads_with_mates_and_fusions.sam
 	#and extract all the reads with this ids form the chimeric-alignment sam file
 	#samtools view -bh -o viral_reads.bam alignments.sorted.bam hpv16 hpv33 hpv35 hhv4 hhv4t1
-	grep -w -F XF: viral_reads_with_mates_and_fusions.sam | cut -f1 | sort | uniq > viral_fusion_read.ids
+	grep -F XF: viral_reads_with_mates_and_fusions.sam | cut -f1 | sort | uniq > viral_fusion_read.ids
 	#get fusion read ids
 	grep -v -w -R -f viral_fusion_read.ids viral_reads_with_mates_and_fusions.sam > viral_reads_with_mates.sam
 	#remove lines with the fusion ids 
