@@ -13,6 +13,10 @@ names(bamfiles)<-sapply(strsplit(bamlist,'/'),second)
 gtffile <- file.path('~/viruses-in-RNA-seq/Viral.Genes.Annotation/hpv.gtf') 
 txdb <- makeTxDbFromGFF(gtffile, format="gtf")
 genes <- exonsBy(txdb, by="gene")
-se <- summarizeOverlaps(features=genes, reads=bamfiles, mode="Union", singleEnd=T, ignore.strand=TRUE, fragments=F )
-assay(se)
-save(file='hpv_expression.Rda',list=c('se'))
+counts<-matrix(nrow=0,ncol=length(bamlist))
+for (i in 1:length(genes))
+{
+	se<-summarizeOverlaps(features=genes[i], reads=bamfiles, mode="Union", singleEnd=T, ignore.strand=TRUE, fragments=F )
+	counts<-rbind(counts,assay(se))
+}
+save(file='hpv_expression.Rda',list=c('counts'))
