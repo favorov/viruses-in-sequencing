@@ -30,7 +30,8 @@ then
 	#it is to exist at that moment
 	touch ../timestamp.extract.paired.viral.reads.start.txt
 	pushd ${folder}virus-findings >/dev/null
-	samtools view viral_reads.bam | cut -f1 | sort > viral_read.ids
+	samtools view -h viral_reads.bam | grep -v -F XF: > viral_reads_no_fus.sam 
+	cat viral_reads_no_fus.sam | cut -f1 | sort > viral_read.ids
 	#we take all the viral reads
 	perl ${scripthome}/kill.ids.pairs.pl viral_read.ids > unpaired_viral_read.ids
 	#and, find those that do not have a pair
