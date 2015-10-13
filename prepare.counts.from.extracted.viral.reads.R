@@ -30,7 +30,6 @@ hpv33<-sapply(list.of.full.counters,function(vec) ifelse(is.na(vec['hpv33']),0,v
 hpv35<-sapply(list.of.full.counters,function(vec) ifelse(is.na(vec['hpv35']),0,vec['hpv35']))
 hhv4<-sapply(list.of.full.counters,function(vec) ifelse(is.na(vec['hhv4']),0,vec['hhv4']))
 hhv4t1<-sapply(list.of.full.counters,function(vec) ifelse(is.na(vec['hhv4t1']),0,vec['hhv4t1']))
-
 counts<-rbind(counts,hpv1,hpv33,hpv35,hhv4,hhv4t1)
 
 #save(file='hpv_expression.Rda',list=c('counts'))
