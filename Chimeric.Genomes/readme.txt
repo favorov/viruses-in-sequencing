@@ -1,0 +1,1 @@
+To make an index, add fasta*.fa files of chromosomes of hg and then run makeindex.
