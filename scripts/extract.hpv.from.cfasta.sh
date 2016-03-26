@@ -34,6 +34,7 @@ then
 
 	bowtie -S -C -f -Q $qual $ref $cfasta | samtools view -Sh -F4 - > viral-reads.sam 
 	popd > /dev/null 
+	touch ${folder}/timestamp.extract.hpv.from.cfasta.started.txt	
 	echo 'done..'
 else
 	echo 'It was already done before..'
