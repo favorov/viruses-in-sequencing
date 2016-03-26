@@ -21,7 +21,7 @@ if [ ! -f ${folder}timestamp.extract.hpv.from.cfasta.completed.txt ]
 then
 	echo "Started..."
 	#folder is to exist at that moment
-	${folder}/timestamp.extract.hpv.from.cfasta.started.txt	
+	touch ${folder}/timestamp.extract.hpv.from.cfasta.started.txt	
 	pushd ${folder} >/dev/null
 	cfasta=`ls -m *csfasta | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
 	qual=`ls -m *QV.qual | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
