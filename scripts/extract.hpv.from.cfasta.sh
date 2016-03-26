@@ -1,15 +1,44 @@
 #!/bin/bash
-touch virus-detection-started.txt
+#$ -q zbatch
+#$ -S /bin/bash
+#$ -cwd
+#$ -j y
 
-cfasta=`ls -m *csfasta | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
-qual=`ls -m *QV.qual | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
-#ln -m output all via comma
-#sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g
-#is magic sytaxis or replacing \n's 
-#http://stackoverflow.com/questions/1251999/how-can-i-replace-a-newline-n-using-sed
+. /etc/profile.d/modules.sh
+module load sharedapps
+module load samtools
+module load bowtie/1.1.1 
 
-ref=~/viruses-in-sequencing/genomes/Viral.Genomes/HPV/hpv
+folder=${folder-$1}
+#folder is to be passed by -v option to qsub or set by other method
+#if it is not, we try ${1}
+[[ ! $folder = *\/ ]] && folder=${folder}/
+#if folder is not given with / add it
+#folder is the working folder
 
-bowtie -S -C -f -Q $qual $ref $cfasta | samtools view -Sh -F4 - > viral-reads.sam 
-#bowtie -S -C -f  -Q Daria_set2_2013_09_17_1_04_27281_Enrich_F3.QV.qual,Daria_set2_2013_09_17_1_05_27281_Enrich_F3.QV.qual,Daria_set2_2013_09_17_1_06_27281_Enrich_F3.QV.qual ~/viruses-in-sequencing/genomes/Viral.Genomes/HPV/hpv Daria_set2_2013_09_17_1_04_27281_Enrich_F3.csfasta,Daria_set2_2013_09_17_1_05_27281_Enrich_F3.csfasta,Daria_set2_2013_09_17_1_06_27281_Enrich_F3.csfasta | samtools view -Sh -F4 - > viral-reads.sam 
-touch virus-detection-completed.txt
+if [ ! -f ${folder}timestamp.extract.hpv.from.cfasta.completed.txt ]
+then
+	echo 'the extract.hpv.from.cfasta script was not run here, run it first'
+	exit 1
+fi
+echo "extracting paired viral reads, simplest way; the work folder is ${folder}"
+if [ ! -f ${folder}timestamp.extract.hpv.from.cfasta.completed.txt ]
+then
+	#folder is to exist at that moment
+	${folder}/timestamp.extract.hpv.from.cfasta.started.txt	
+	pushd ${folder} >/dev/null
+	cfasta=`ls -m *csfasta | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
+	qual=`ls -m *QV.qual | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
+	#ln -m output all via comma
+	#sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g
+	#is magic sytaxis or replacing \n's 
+	#http://stackoverflow.com/questions/1251999/how-can-i-replace-a-newline-n-using-sed
+
+	ref=~/viruses-in-sequencing/genomes/Viral.Genomes/HPV/hpv
+
+	bowtie -S -C -f -Q $qual $ref $cfasta | samtools view -Sh -F4 - > viral-reads.sam 
+	popd > /dev/null 
+	echo 'done..'
+else
+	echo 'It was already done before..'
+fi
