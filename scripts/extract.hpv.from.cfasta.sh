@@ -30,7 +30,7 @@ then
 	#is magic sytaxis or replacing \n's 
 	#http://stackoverflow.com/questions/1251999/how-can-i-replace-a-newline-n-using-sed
 
-	ref=~/viruses-in-sequencing/genomes/Viral.Genomes/HPV/hpv
+	ref=~/viruses-in-sequencing/genomes/Viral.Genomes/HPV/colour/hpv
 
 	bowtie -S -C -f -Q $qual $ref $cfasta | samtools view -Sh -F4 - > viral-reads.sam 
 	popd > /dev/null 
