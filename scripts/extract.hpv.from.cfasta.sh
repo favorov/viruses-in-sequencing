@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -q zbatch
+##$ -q zbatch
 #$ -S /bin/bash
 #$ -cwd
 #$ -j y
