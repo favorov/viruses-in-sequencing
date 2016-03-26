@@ -16,14 +16,10 @@ folder=${folder-$1}
 #if folder is not given with / add it
 #folder is the working folder
 
+echo "Extracting viral from color single-end solid reads. Folder is ${folder}"
 if [ ! -f ${folder}timestamp.extract.hpv.from.cfasta.completed.txt ]
 then
-	echo 'the extract.hpv.from.cfasta script was not run here, run it first'
-	exit 1
-fi
-echo "extracting paired viral reads, simplest way; the work folder is ${folder}"
-if [ ! -f ${folder}timestamp.extract.hpv.from.cfasta.completed.txt ]
-then
+	echo "Started..."
 	#folder is to exist at that moment
 	${folder}/timestamp.extract.hpv.from.cfasta.started.txt	
 	pushd ${folder} >/dev/null
