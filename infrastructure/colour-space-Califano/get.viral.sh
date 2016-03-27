@@ -1,6 +1,6 @@
 #!/bin/bash
-#we run it from the fasta folder where all the JHUJC subfoders are
-for dir in JHUJC*
+#we run it from the folder where fastq falder with all the JHUJC subfoders with cfata are are
+for dir in fastq/JHUJC*
 do
 	echo $dir 
 	pushd $dir/raw
