@@ -7,7 +7,7 @@ cat << ENDSCRIPT | qsub -N macs.$name -cwd -S /bin/bash -j y
 #!/bin/bash
 . /etc/profile.d/modules.sh
 module load sharedapps
-module load samtools
+module load macs 
 macs2 callpeak -t $t -c $c -n $name --nomodel -g 25000 
 ENDSCRIPT
 
