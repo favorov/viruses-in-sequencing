@@ -2,7 +2,7 @@
 #requires python3
 #we run it from the folder (fastq in this project) with all the JHUJC subfoders with cfasta are in
 import os
-impors glob
+import glob
 
 def print_command(t,c,name):
 	print('''
