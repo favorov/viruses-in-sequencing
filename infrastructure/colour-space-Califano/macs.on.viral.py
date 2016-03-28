@@ -17,7 +17,7 @@ ENDSCRIPT''' % (name,t,c,name))
 
 def main():
     foldernames=glob.glob('JHUJC0*')
-		print foldernames
+    print foldernames
     #name='18732'
     #t='JHUJC01001_027_18732_Enrich/raw/viral-reads.sam'
     #c='JHUJC01001_028_18732_Total/raw/viral-reads.sam'
