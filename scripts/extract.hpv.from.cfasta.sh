@@ -25,9 +25,9 @@ then
 	pushd ${folder} >/dev/null
 	cfasta=`ls -m *csfasta | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
 	qual=`ls -m *QV.qual | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g'`
-	#ln -m output all via comma
+	#ls -m output all files via comma
 	#sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g
-	#is magic sytaxis or replacing \n's 
+	#this magic sytaxis removes internal \n's (endoflines) 
 	#http://stackoverflow.com/questions/1251999/how-can-i-replace-a-newline-n-using-sed
 
 	ref=~/viruses-in-sequencing/genomes/Viral.Genomes/HPV/colour/hpv
