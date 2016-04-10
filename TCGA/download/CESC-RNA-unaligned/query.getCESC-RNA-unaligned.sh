@@ -1,4 +1,5 @@
 manif=data/manifest
+mkdir -p ${manif}
 rm -f ${manif}/querylog.txt
 touch  ${manif}/querylog.txt
 for ID in `cat samplenames.txt`
