@@ -1,4 +1,4 @@
-#$ -q largememory.q 
+#$ -q largememory 
 #$ -S /bin/bash
 #$ -cwd
 #$ -j y
@@ -22,10 +22,10 @@ folder=${folder-$1}
 
 #scripthome=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
 #it works only if script is started not by qrsh
-scripthome=${scripthome-${2-~/viruses-in-RNA-seq}}
+scripthome=${scripthome-${2-~/viruses-in-sequencing/}}
 
-chimereref=$scripthome/Chimeric.Genomes/hg19+HPV+EBV
-indexname=hg19+hpv+ebv
+chimereref=$scripthome/Chimeric.Genomes/hg19+HPV.common
+indexname=hg19+hpv
 mapsplice=~/Mapsplice/MapSplice-v2.2.0/mapsplice.py
 
 echo "started looking for HPV and EBV in folder $folder"
@@ -39,7 +39,7 @@ then
 	mkdir -p virus-findings
 	#if not exists, create, otherwise, do nothing, no error
 
-	python2 $mapsplice --fusion-non-canonical -o virus-findings/ -c $chimereref -x $chimereref/$indexname -1 unmapped1.fq -2 unmapped2.fq 
+	python2 $mapsplice --fusion --fusion-non-canonical -o virus-findings/ -c $chimereref -x $chimereref/$indexname -1 unmapped1.fq -2 unmapped2.fq 
 
 	touch timestamp.mapsplice.unmapped.stop.txt
 
