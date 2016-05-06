@@ -15,7 +15,7 @@ module load bowtie/1.1.1
 folder=${folder-$1}
 #folder is to be passed by -v option to qsub or set by other method
 #if it is not, we try ${1}
-[[ ! $folder = *\/ ]] && folder=${folder}/
+#[[ ! $folder = *\/ ]] && folder=${folder}/
 #if folder is not given with / add it
 #folder is the working folder
 #folder is to exist on that stage
@@ -24,11 +24,11 @@ folder=${folder-$1}
 #it works only if script is started not by qrsh
 scripthome=${scripthome-${2-~/viruses-in-sequencing/}}
 
-chimereref=$scripthome/Chimeric.Genomes/hg19+HPV.common
+chimereref=${scripthome}/genomes/Chimeric.Genomes/hg19+HPV.common
 indexname=hg19+hpv
 mapsplice=~/Mapsplice/MapSplice-v2.2.0/mapsplice.py
 
-echo "started looking for HPV and EBV in folder $folder"
+echo "started looking for various common HPV in folder $folder"
 
 if [ ! -f $folder/timestamp.mapsplice.unmapped.stop.txt ]
 then
