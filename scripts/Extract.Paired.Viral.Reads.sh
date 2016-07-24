@@ -1,3 +1,4 @@
+#it was an attempt to make rsem-readable alignment with viruse only. Did now work, still the script is useful as a source of code
 #$ -q zbatch
 #$ -S /bin/bash
 #$ -cwd
