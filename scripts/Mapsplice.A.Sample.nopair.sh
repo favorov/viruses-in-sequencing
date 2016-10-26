@@ -15,7 +15,7 @@ module load bowtie/1.1.1
 fasta=${fasta-$1}
 #fasta is to be passed by -v option to qsub or set by other method
 #if it is not, we try ${1}
-fasta=${folder-${2-'.'}}
+folder=${folder-${2-'.'}}
 #[[ ! $folder = *\/ ]] && folder=${folder}/
 #if folder is not given with / add it
 #folder is the working folder
