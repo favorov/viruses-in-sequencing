@@ -15,7 +15,7 @@ module load bowtie/1.1.1
 fasta=${fasta-$1}
 #fasta is to be passed by -v option to qsub or set by other method
 #if it is not, we try ${1}
-folder=${folder-${2-'.'}}
+folder=${folder-${2-.}}
 #[[ ! $folder = *\/ ]] && folder=${folder}/
 #if folder is not given with / add it
 #folder is the working folder
@@ -23,13 +23,15 @@ folder=${folder-${2-'.'}}
 
 #scripthome=$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )
 #it works only if script is started not by qrsh
-scripthome=${scripthome-${3-'~/viruses-in-sequencing/'}}
+scripthome=${scripthome-${3-${HOME}/viruses-in-sequencing}}
 
 chimereref=${scripthome}/genomes/Chimeric.Genomes/hg19+HPV16
 indexname=hg19+hpv16
 mapsplice=~/Mapsplice/MapSplice-v2.2.0/mapsplice.py
 
 echo "started looking for HPV16 in $folder/$fasta"
+echo "ref is in $chimereref"
+echo "index is in $chimereref/$indexname"
 
 if [ ! -f $folder/timestamp.mapsplice.${fasta}.stop.txt ]
 then
