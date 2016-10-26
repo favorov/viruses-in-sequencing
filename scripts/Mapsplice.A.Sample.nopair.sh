@@ -25,11 +25,11 @@ fasta=${folder-${2-'.'}}
 #it works only if script is started not by qrsh
 scripthome=${scripthome-${3-'~/viruses-in-sequencing/'}}
 
-chimereref=${scripthome}/genomes/Chimeric.Genomes/hg19+HPV16.common
+chimereref=${scripthome}/genomes/Chimeric.Genomes/hg19+HPV16
 indexname=hg19+hpv16
 mapsplice=~/Mapsplice/MapSplice-v2.2.0/mapsplice.py
 
-echo "started looking for various common HPV in folder $folder"
+echo "started looking for HPV16 in $folder/$fasta"
 
 if [ ! -f $folder/timestamp.mapsplice.${fasta}.stop.txt ]
 then
