@@ -6,4 +6,4 @@
 
 #!/bin/bash
 magicblast=/home/favorov/usr/local/bin/magicblast
-$magicblast -query reads_of_insert.fastq -db ~/data/blast-db-hg19/human_genomic -infmt fastq > reads-again-human_genomics.sam
+$magicblast -query reads_of_insert.fastq -db ~/data/reference/blast-db-human-genomic/human_genomic -infmt fastq > reads-mb-against-human_genomics.sam
