@@ -4,6 +4,8 @@ reads.geom.hist<-function(fname,hist.title=fname){
   len<-nchar(fname)
   if(tolower(substr(fname,len-3,len)=='.sam'))
     fname=substr(fname,1,len-4)
+  if(tolower(substr(fname,len-3,len)=='.bam'))
+    fname=substr(fname,1,len-4)
   samname<-paste0(fname,'.sam')
 	bamname<-paste0(fname,'.bam')
 	if (
