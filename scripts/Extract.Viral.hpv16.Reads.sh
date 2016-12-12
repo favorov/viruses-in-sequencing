@@ -1,4 +1,4 @@
-##$ -q zbatch
+#$ -q zappa
 #$ -S /bin/bash
 #$ -cwd
 #$ -j y
