@@ -3,7 +3,6 @@ package main
 import (
 	"strings"
 	"flag"
-	"fmt"
 	"io"
 	"bufio"
 	"log"
@@ -15,8 +14,7 @@ import (
 //three parameters: input (sam) file, output (sam) file and the aim sequence name prefix (hpv)
 //reads reads from input sam, created out sam witht the same header, but it writes there 
 //only those reads that are on the aim or their mataes are in the aim.
-func filter_reads(in, out,aim_seq string )
-{
+func filter_reads(in, out, aim string ) {
 	
 	r, err := os.Open(in)
 	if err != nil {
@@ -35,10 +33,7 @@ func filter_reads(in, out,aim_seq string )
 	}
 	defer wf.Close()
 
-	w,err := bufio.NewWriter(wf)
-	if err != nil {
-		log.Fatalf("could create  write buffer for file %q: %q", out, err)
-	}
+	w := bufio.NewWriter(wf)
 	defer w.Flush()
 
 	samw, err:=sam.NewWriter(w,samr.Header(),sam.FlagDecimal)
@@ -55,8 +50,8 @@ func filter_reads(in, out,aim_seq string )
 		if err != nil {
 			log.Fatalf("error reading sam file %q: %q", in, err)
 		}
-		if ( (rec.Flags & sam.Unmapped == 0 && HasPrefix(rec.Ref.Name(),aim) ) || //mapped in aim
-			(rec.Flags & sam.MateUnmapped == 0 && HasPrefix(rec.MateRef.Name(),aim)) ) { //mate is mapped in aim  
+		if ( (rec.Flags & sam.Unmapped == 0 && strings.HasPrefix(rec.Ref.Name(),aim) ) || //mapped in aim
+			(rec.Flags & sam.MateUnmapped == 0 && strings.HasPrefix(rec.MateRef.Name(),aim)) ) { //mate is mapped in aim  
 			samw.Write(rec)
 		}
 	}
@@ -68,6 +63,7 @@ func filter_reads(in, out,aim_seq string )
 var (
 	idir    = flag.String("idir", ".", "the dir with alignments.sam")
 	odir    = flag.String("odir", ".", "the dir with the result viral_reads.sam")
+	help    = flag.Bool("help", false, "display help")
 )
 
 
