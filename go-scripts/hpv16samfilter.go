@@ -50,14 +50,16 @@ func filter_reads(in, out, aim string ) {
 		if err != nil {
 			log.Fatalf("error reading sam file %q: %q", in, err)
 		}
-		if ( (rec.Flags & sam.Unmapped == 0 && strings.HasPrefix(rec.Ref.Name(),aim) ) || //mapped in aim
-			(rec.Flags & sam.MateUnmapped == 0 && strings.HasPrefix(rec.MateRef.Name(),aim)) ) { //mate is mapped in aim  
-			samw.Write(rec)
-		}
+		if ( 
+					( rec.Flags & sam.Unmapped == 0 && 
+					strings.HasPrefix(rec.Ref.Name(),aim) ) 
+					|| //mapped in aim
+					( rec.Flags & sam.Paired == sam.Paired //paired
+					rec.Flags & sam.MateUnmapped == 0 &&  
+					strings.HasPrefix(rec.MateRef.Name(),aim)) //mate is mapped in aim  
+				) {samw.Write(rec)}
 	}
 }
-
-
 
 
 var (
