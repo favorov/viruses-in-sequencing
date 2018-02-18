@@ -2,6 +2,7 @@
 #we run it from the folder where all the DGay subfoders are
 for dir in DGay*
 do
+	dir=${dir}/virus-findings
 	echo $dir 
 	pushd $dir
 	command="~/viruses-in-sequencing/go-scripts/hpv16samfilter"
