@@ -21,7 +21,7 @@ do
 					' 
 			fi
 		done
-		exit 
+		# exit 
 		# devel
 	done
 done
