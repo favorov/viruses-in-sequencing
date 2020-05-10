@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -S /bin/bash
 #$ -cwd
-#$ -pe smp 8
+#$ -pe zappa-pe 8
 
 echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 pe=4
