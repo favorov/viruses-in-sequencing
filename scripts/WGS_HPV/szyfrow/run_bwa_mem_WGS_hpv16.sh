@@ -1,5 +1,6 @@
 #!/bin/bash
 #$ -S /bin/bash
+#$ -q zappa
 #$ -cwd
 #$ -pe openmpi 8
 
