@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -S /bin/bash
 #$ -cwd
-#$ -pe zappa-pe 8
+#$ -pe openmpi 8
 
 module load bwa
 module load samtools
