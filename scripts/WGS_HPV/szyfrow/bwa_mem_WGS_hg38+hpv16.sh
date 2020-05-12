@@ -25,7 +25,8 @@ for sample in ${list[@]}
 	for wgs1 in "${wgsfiles[@]}"
 		do
 		echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
-		qsub  -o $outputdir -e $outputdir -v wgs1=$wgs1,iter=$iter,outputdir=$outputdir,reference=$reference,sample=$sample run_bwa_mem_WGS_hg38+hpv16.sh	
+		#qsub  -o $outputdir -e $outputdir -v wgs1=$wgs1,iter=$iter,outputdir=$outputdir,reference=$reference,sample=$sample run_bwa_mem_WGS_hg38+hpv16.sh	
+		qsub  -v wgs1=$wgs1,iter=$iter,outputdir=$outputdir,reference=$reference,sample=$sample run_bwa_mem_WGS_hg38+hpv16.sh	
 		((iter++))
 		done
 	done

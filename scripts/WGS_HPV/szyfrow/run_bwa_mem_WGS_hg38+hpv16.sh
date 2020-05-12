@@ -1,21 +1,22 @@
 #!/bin/bash
-#$ -S /bin/bash
+#$ -S /bin/sh
 #$ -q zappa
 #$ -cwd
-#$ -pe openmpi 8
+#$ -pe zappa-pe 8
 module load bwa
 module load samtools
 
+outwgs="${outputdir}${iter}_${sample}.bam"
+
 timestamp=${outputdir}/align.${outwgs}.against.hg38+hpv16.txt
 
-echo "Aligning $wgs1 and $wgs2 against $reference (pair $iter) and output bam to ${outwgs}"
+echo "Aligning $wgs1 and $wgs2 against $reference (pair $iter) and output bam, pair ${iter}, output to ${outwgs}"
 if [ ! -f $timestamp ]
 then
 	echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 	pe=4
 
 	wgs2=${wgs1/_1.fq/_2.fq}
-	outwgs="${outputdir}${iter}_${sample}.bam"
 	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools sort -@$pe -o $outwgs -"
 	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools sort -@$pe -o $outwgs -
 	touch $timestamp	
