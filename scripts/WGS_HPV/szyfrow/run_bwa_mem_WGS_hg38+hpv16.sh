@@ -8,9 +8,9 @@ module load samtools
 
 pe=4
 
-outwgs="${outputdir}${iter}_${sample}.bam"
+outwgs="${outputdir}/${sample}_${iter}.bam"
 
-timestamp=${outputdir}/align.${outwgs}.against.hg38+hpv16.txt
+timestamp=${outputdir}/align.${sample}_${iter}.against.hg38+hpv16.txt
 
 wgs2=${wgs1/_1.fq/_2.fq}
 
