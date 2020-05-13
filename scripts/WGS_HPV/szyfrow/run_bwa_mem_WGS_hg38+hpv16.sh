@@ -22,7 +22,7 @@ then
 	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools sort -@$pe -o $outwgs -"
 	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools sort -@$pe -o $outwgs -
 	touch ${stamp}.done
-	seconds=expr `stat -c %X  ${stamp}.done` - `stat -c %X  ${stamp}.start`
+	let seconds = `stat -c %X  ${stamp}.done` - `stat -c %X  ${stamp}.start`
 	echo "done in ${seconds} seconds"
 else
 	echo "The stamp ${stamp}.done was set before"
