@@ -10,20 +10,22 @@ pe=4
 
 outwgs="${outputdir}/${sample}_${iter}.bam"
 
-timestamp=${outputdir}/align.${sample}_${iter}.against.hg38+hpv16.txt
+stamp=${outputdir}/align.${sample}_${iter}.against.hg38+hpv16
 
 wgs2=${wgs1/_1.fq/_2.fq}
 
 echo "Aligning $wgs1 and $wgs2 against $reference (pair $iter) and output bam, pair ${iter}, output to ${outwgs}"
-if [ ! -f $timestamp ]
+if [ ! -f ${stamp}.done ]
 then
+	touch ${stamp}.start
 	echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools sort -@$pe -o $outwgs -"
 	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools sort -@$pe -o $outwgs -
-	touch $timestamp	
-	echo 'done..'
+	touch ${stamp}.done
+	seconds=expr `stat -c %X  ${stamp}.done` - `stat -c %X  ${stamp}.start`
+	echo "done in ${seconds} seconds"
 else
-	echo "The timestamp $timestamp was set before"
+	echo "The stamp ${stamp}.done was set before"
 fi
 
 #samtools index $outwgs
