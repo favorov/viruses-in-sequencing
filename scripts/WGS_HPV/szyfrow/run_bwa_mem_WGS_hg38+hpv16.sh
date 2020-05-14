@@ -2,11 +2,11 @@
 #$ -S /bin/sh
 #$ -q zappa
 #$ -cwd
-#$ -pe zappa-pe 8
+##$ -pe zappa-pe 8
 module load bwa
 module load samtools
 
-pe=8
+pe=1
 
 outwgs="${outputdir}/${sample}_${iter}"
 
@@ -19,10 +19,10 @@ if [ ! -f ${stamp}.done ]
 then
 	touch ${stamp}.start
 	echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
-	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 > $outwgs.unsorted.bam"
-	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 > $outwgs.unsorted.bam 
+	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools view -bh - > $outwgs.unsorted.bam"
+	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools view -bh - > $outwgs.unsorted.bam 
 	echo "samtools sort -@$pe -o $outwgs.bam $outwgs.unsorted.bam"
-	samtools sort -@$pe -o $outwgs.bam $outwgs.unsorted.bam
+	samtools sort -f -@$pe $outwgs.unsorted.bam $outwgs.bam
 	#@ means treads in sort (default 1) and additional threads in input (default 0)
 	echo "samtools index -@$(expr pe - 1) $outwgs.bam"
 	samtools index -@$(expr pe - 1) $outwgs.bam
