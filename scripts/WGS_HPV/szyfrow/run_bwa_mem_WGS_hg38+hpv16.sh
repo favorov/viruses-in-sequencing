@@ -19,7 +19,7 @@ if [ ! -f ${stamp}.done ]
 then
 	touch ${stamp}.start
 	echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
-	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools view -bh - > $outwgs.unsorted.bam"
+	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools view -Sbh - > $outwgs.unsorted.bam"
 	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 | samtools view -bh - > $outwgs.unsorted.bam 
 	echo "samtools sort -@$pe -o $outwgs.bam $outwgs.unsorted.bam"
 	samtools sort -f -@$pe $outwgs.unsorted.bam $outwgs.bam
