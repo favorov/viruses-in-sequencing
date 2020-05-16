@@ -5,6 +5,9 @@
 #$ -cwd
 #$ -pe zappa-pe 8
 #$ -j y
+
+echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
+
 module load bwa
 module load samtools
 
@@ -13,6 +16,8 @@ pe=8
 outwgs="${outputdir}/${sample}_${iter}"
 
 stampdir=${outputdir}/stamps
+
+echo "Aligning $wgs1 and $wgs2 against $reference (pair $iter), then sort and index, output to ${outwgs}.bam, stamps to $stampdir"
 
 if [[ ! -d $stampdir ]]
 then
@@ -23,10 +28,8 @@ stamp=${stampdir}/align.${sample}_${iter}.against.hg38+hpv16
 
 wgs2=${wgs1/_1.fq/_2.fq}
 
-echo "Aligning $wgs1 and $wgs2 against $reference (pair $iter) and output bam, output to ${outwgs}.bam"
-echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
-
 touch ${stamp}.start
+
 if [ ! -f ${stamp}.aligned ]
 then
 	touch ${stamp}.aligner.started
