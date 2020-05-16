@@ -21,7 +21,7 @@ echo "Aligning $wgs1 and $wgs2 against $reference (pair $iter), then sort and in
 
 if [[ ! -d $stampdir ]]
 then
-	mkdir $stampdir 2> /dev/null || stampdir=$outputdir$
+	mkdir $stampdir 2> /dev/null || stampdir=$outputdir
 fi
 
 stamp=${stampdir}/align.${sample}_${iter}.against.hg38+hpv16
