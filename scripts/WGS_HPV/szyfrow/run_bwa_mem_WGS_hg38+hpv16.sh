@@ -9,9 +9,12 @@
 echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 
 module load bwa
-module load samtools
+module load samtools/1.6.0
 
 pe=8
+pe_1=$(expr $pe - 1)
+
+outputdir= ${outputdir%/} #removes enline / if it is there 
 
 outwgs="${outputdir}/${sample}_${iter}"
 
@@ -33,7 +36,7 @@ touch ${stamp}.start
 if [ ! -f ${stamp}.aligned ]
 then
 	touch ${stamp}.aligner.started
-	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 >  $outwgs.sam"
+	echo "bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 > $outwgs.sam"
 	bwa mem -t $pe -T 20 $reference $wgs1 $wgs2 > $outwgs.sam && touch ${stamp}.aligned
 else
 	echo "alignment was done before"
@@ -42,8 +45,8 @@ fi
 if [ ! -f ${stamp}.bammed ]
 then
 	touch ${stamp}.bammer.started
-	echo "samtools view -Sbh $outwgs.sam > $outwgs.unsorted.bam"
-	samtools view -Sbh -@$pe $outwgs.sam > $outwgs.unsorted.bam && touch ${stamp}.bammed
+	echo "samtools view -b -1 -@$pe_1 -o $outwgs.unsorted.bam $outwgs.sam "
+	samtools view -b -1 -@$pe_1 -o $outwgs.unsorted.bam $outwgs.sam && touch ${stamp}.bammed
 else
 	echo "sam->bam was done before"
 fi
@@ -52,8 +55,8 @@ fi
 if [ ! -f ${stamp}.sorted ]
 then
 	touch ${stamp}.sorter.started
-	echo "samtools sort -@$pe -o $outwgs.bam $outwgs.unsorted.bam"
-	samtools sort -f -@$pe $outwgs.unsorted.bam $outwgs.bam && touch ${stamp}.sorted
+	echo "samtools sort -@$pe_1 -o $outwgs.bam -l 9 $outwgs.unsorted.bam"
+	samtools sort -@$pe_1 -o $outwgs.bam -l 9 $outwgs.unsorted.bam && touch ${stamp}.sorted
 else
 	echo "bam was sorted before"
 fi
@@ -62,8 +65,8 @@ if [ ! -f ${stamp}.indexed ]
 then
 	#@ means treads in sort (default 1) and additional threads in index (default 0)
 	touch ${stamp}.indexer.started
-	echo "samtools index -@$(expr pe - 1) $outwgs.bam"
-	samtools index -@$(expr pe - 1) $outwgs.bam && touch ${stamp}.indexed$
+	echo "samtools index -@$pe_1 $outwgs.bam"
+	samtools index -@$pe_1 $outwgs.bam && touch ${stamp}.indexed
 else
 	echo "bam was indexed before"
 fi
@@ -71,9 +74,6 @@ fi
 touch ${stamp}.end
 time0 = `stat -c %X  ${stamp}.start`
 time1 = `stat -c %X  ${stamp}.end`
-seconds=$(expr $time1 - $time0)
+seconds=$( expr $time1 - $time0 )
 echo "done in ${seconds} seconds"
 
-#outwgsHPV=${outwgs/'.bam'/'.HPV.sam'}
-#samtools view -H $outwgs > $outwgsHPV
-#samtools view $outwgs | grep "NC_001526" >> $outwgsHPV
