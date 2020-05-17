@@ -72,8 +72,8 @@ else
 fi
 
 touch ${stamp}.end
-time0 = `stat -c %X  ${stamp}.start`
-time1 = `stat -c %X  ${stamp}.end`
+time0=`stat -c %X  ${stamp}.start`
+time1=`stat -c %X  ${stamp}.end`
 seconds=$( expr $time1 - $time0 )
 echo "done in ${seconds} seconds"
 
