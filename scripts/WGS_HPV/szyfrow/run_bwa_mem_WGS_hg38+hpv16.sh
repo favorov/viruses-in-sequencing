@@ -4,9 +4,10 @@
 #$ -q zappa
 #$ -cwd
 #$ -pe zappa-pe 8
+#$ -o reports
 #$ -j y
 
-echo "qsub  -o $outputdir -e $outputdir run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
+echo "qsub run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 
 module load bwa
 module load samtools/1.6.0
