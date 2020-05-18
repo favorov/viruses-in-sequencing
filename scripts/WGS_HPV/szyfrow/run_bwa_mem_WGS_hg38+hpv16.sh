@@ -49,6 +49,7 @@ then
 	touch ${stamp}.bammer.started
 	echo "samtools view -b -1 -@$pe_1 -o $outwgs.unsorted.bam $outwgs.sam "
 	samtools view -b -1 -@$pe_1 -o $outwgs.unsorted.bam $outwgs.sam && touch ${stamp}.bammed
+	unlink $outwgs.sam
 else
 	echo "sam->bam was done before"
 fi
@@ -60,6 +61,7 @@ then
 	touch ${stamp}.sorter.started
 	echo "samtools sort -@$pe_1 -o $outwgs.bam -l 9 $outwgs.unsorted.bam"
 	samtools sort -@$pe_1 -o $outwgs.bam -l 9 $outwgs.unsorted.bam && touch ${stamp}.sorted
+	unlink $outwgs.unsorted.bam
 else
 	echo "bam was sorted before"
 fi
