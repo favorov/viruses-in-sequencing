@@ -4,7 +4,6 @@
 #$ -q zappa
 #$ -cwd
 #$ -pe zappa-pe 8
-#$ -o reports
 #$ -j y
 
 echo "qsub run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
@@ -73,8 +72,8 @@ else
 fi
 
 touch ${stamp}.end
-time0=`stat -c %X  ${stamp}.start`
-time1=`stat -c %X  ${stamp}.end`
-seconds=$( expr $time1 - $time0 )
-echo "done in ${seconds} seconds"
+#time0=`stat -c %X  ${stamp}.start`
+#time1=`stat -c %X  ${stamp}.end`
+#seconds=$( expr $time1 - $time0 )
+echo "script done in $( expr `stat -c %X  ${stamp}.start` - `stat -c %X  ${stamp}.end` ) seconds"
 
