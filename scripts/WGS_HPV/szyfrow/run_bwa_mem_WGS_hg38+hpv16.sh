@@ -4,6 +4,7 @@
 #$ -q zappa
 #$ -cwd
 #$ -pe zappa-pe 8
+#$ -o reports
 #$ -j y
 
 echo "qsub run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
@@ -41,6 +42,7 @@ then
 else
 	echo "alignment was done before"
 fi
+echo "aligning took $( expr `stat -c %X  ${stamp}.aligned` - `stat -c %X  ${stamp}.aligner.started` ) seconds"
 
 if [ ! -f ${stamp}.bammed ]
 then
@@ -50,6 +52,7 @@ then
 else
 	echo "sam->bam was done before"
 fi
+echo "bamming took $( expr `stat -c %X  ${stamp}.bammed` - `stat -c %X  ${stamp}.bammer.started` ) seconds"
 
 
 if [ ! -f ${stamp}.sorted ]
@@ -60,6 +63,7 @@ then
 else
 	echo "bam was sorted before"
 fi
+echo "sorting took $( expr `stat -c %X  ${stamp}.sorted` - `stat -c %X  ${stamp}.sorter.started` ) seconds"
 
 if [ ! -f ${stamp}.indexed ]
 then
@@ -70,10 +74,8 @@ then
 else
 	echo "bam was indexed before"
 fi
+echo "indexing took $( expr `stat -c %X  ${stamp}.indexed` - `stat -c %X  ${stamp}.indexer.started` ) seconds"
 
 touch ${stamp}.end
-#time0=`stat -c %X  ${stamp}.start`
-#time1=`stat -c %X  ${stamp}.end`
-#seconds=$( expr $time1 - $time0 )
-echo "script done in $( expr `stat -c %X  ${stamp}.start` - `stat -c %X  ${stamp}.end` ) seconds"
+echo "script done in $( expr `stat -c %X  ${stamp}.end` - `stat -c %X  ${stamp}.start` ) seconds"
 
