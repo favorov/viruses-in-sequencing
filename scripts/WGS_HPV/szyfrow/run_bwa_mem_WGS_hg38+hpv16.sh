@@ -14,7 +14,7 @@ module load samtools/1.6.0
 pe=8
 pe_1=$(expr $pe - 1)
 
-outputdir= ${outputdir%/} #removes enline / if it is there 
+outputdir=${outputdir%/} #removes enline / if it is there 
 
 outwgs="${outputdir}/${sample}_${iter}"
 
