@@ -1,5 +1,5 @@
 #This is a spript that align by BWA mem against the hg38+hpv16 + convert to BAM + sort + index one pair of wgs fastq files
-#it is supposed to be run in module lunux + SGE evironment by qsub
+#it is supposed to be invoked in module lunux + SGE evironment by calling qsub from the bwa_mem_WGS_hg38+hpv16.sh script
 #(c) 2020 Mera Mukhina, Alexander Favorov
 #!/bin/bash
 #$ -S /bin/sh
