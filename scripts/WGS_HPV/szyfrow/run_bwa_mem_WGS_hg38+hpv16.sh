@@ -1,3 +1,6 @@
+#This is a spript that align by BWA mem against the hg38+hpv16 + convert to BAM + sort + index one pair of wgs fastq files
+#it is supposed to be run in module lunux + SGE evironment by qsub
+#(c) 2020 Mera Mukhina, Alexander Favorov
 #!/bin/bash
 #$ -S /bin/sh
 #zappa likes to say it is sh, the difference is in initialisation of evironment
@@ -6,6 +9,7 @@
 #$ -pe zappa-pe 8
 #$ -o reports
 #$ -j y
+
 
 echo "qsub run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 
