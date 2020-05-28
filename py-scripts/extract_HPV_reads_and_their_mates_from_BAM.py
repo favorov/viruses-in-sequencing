@@ -29,8 +29,8 @@ def grepViralReads(infile, seq):
 	print('collecting HPV reads...')
 	#copy header and grep all viral reads from sam file
 	outfile=infile.replace('bam','HPV.sam')
-	os.system("samtools view -H %s > %s" % (infile,outfile))
-	os.system("samtools view %s | fgrep %s - >> %s" % (infile,seq,outfile))
+	#os.system("samtools view -h %s > %s" % (infile,outfile))
+	os.system("samtools view -h %s | fgrep %s - >> %s" % (infile,seq,outfile))
 	print('viral reads collected from SAM file')
 
 def grepMates(infile,outfile):
