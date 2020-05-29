@@ -73,8 +73,10 @@ def main():
 			#print(*list, sep='\n')
 			for file in list:
 				print("Current file is "+file)
-				outfile=file.replace('bam','HPV.sam')
-				tmst=file.replace('bam','timestamp')
+				#outfile=file.replace('bam$','HPV.sam')
+				#tmst=file.replace('bam$','timestamp')
+				outfile=re.sub('bam$', 'HPV.sam', file)
+				tmst=re.sub('bam$', 'timestamp', file)
 				#check if we already have the results and run scripts for missing files
 				if not os.path.exists(tmst):
 					start_time = time.time()
