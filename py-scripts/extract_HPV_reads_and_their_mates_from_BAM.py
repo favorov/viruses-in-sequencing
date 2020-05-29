@@ -70,15 +70,15 @@ def main():
 			print("sample %s: %s files" % (sample,len(list)))
 			#next string works in python3+ only
 			#print(*list, sep='\n')
-			for file in list:
-				print("Current file is "+file)
-				HPVoutfile=re.sub('bam$', 'HPV.sam', file)
-				HPVwithmatesoutfile=re.sub('bam$', 'HPV_with_mates.sam', file)
-				tmst=re.sub('bam$', 'timestamp', file)
+			for bamfile in list:
+				print("Current file is "+bamfile)
+				HPVoutfile=re.sub('bam$', 'HPV.sam', bamfile)
+				HPVwithmatesoutfile=re.sub('bam$', 'HPV_with_mates.sam', bamfile)
+				tmst=re.sub('bam$', 'timestamp', bamfile)
 				#check if we already have the results and run scripts for missing files
 				if not os.path.exists(tmst):
 					start_time = time.time()
-					grepViralReads(file,'NC_001526',HPVoutfile)
+					grepViralReads(bamfile,'NC_001526',HPVoutfile)
 					with open(tmst,mode='w') as first:
 						first.write("grep HPV reads finished in %s seconds" % (time.time() - start_time))
 				else:
@@ -86,7 +86,7 @@ def main():
 						
 				if "grep mates finished" not in open(tmst).read():
 					start_time = time.time()
-					grepMates(HPVoutfile,HPVwithmatesoutfile)
+					grepMates(bamfile,HPVoutfile,HPVwithmatesoutfile)
 					with open(tmst,mode='a+') as second:
 						second.write("grep mates finished in %s seconds" % (time.time() - start_time))
 				else:
