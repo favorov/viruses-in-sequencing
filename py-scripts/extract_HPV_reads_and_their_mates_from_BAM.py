@@ -6,6 +6,7 @@
 import os
 import sys
 import glob
+import re
 import time
 import pysam #samtools analog
 
