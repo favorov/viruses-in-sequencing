@@ -79,7 +79,7 @@ def main():
 				if not os.path.exists(tmst):
 					start_time = time.time()
 					grepViralReads(file,'NC_001526')
-					with open(tmst,os.O_RDWR|os.O_CREAT) as first:
+					with open(tmst,mode='w') as first:
 						first.write("grep HPV reads finished in %s seconds" % (time.time() - start_time))
 				else:
 					print('HPV reads already present')
