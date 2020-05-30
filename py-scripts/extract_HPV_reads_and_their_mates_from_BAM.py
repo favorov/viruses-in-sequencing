@@ -22,24 +22,34 @@ files with viral reads and their pairs sample.HPV.sam and sample.HPV_with_mates.
 '''
 
 
-def grepViralReads(infile, seq, hpvoutfile):
+def grepViralReads(infile, seq, hpvoutfile, tmstamp):
 	'''
 	in:SAM file (and viral sequence name for grep)
 	out:SAM with header with viral reads, SAM with header with viral reads and their pairs
 	'''
+	start_time = time.time()
 	print('collecting HPV reads...')
 	#copy header and grep all viral reads from sam file
-	#os.system("samtools view -h %s > %s" % (infile,outfile))
-	os.system("samtools view -h %s | fgrep %s - > %s" % (infile,seq,hpvoutfile))
-	print('viral reads collected from SAM file')
+	os.system("samtools view -H %s > %s" % (infile,outfile))
+	#os.system("samtools view -h %s | fgrep %s - > %s" % (infile,seq,hpvoutfile))
+	os.system("samtools view %s | fgrep %s - >> %s && echo 'grep HPV reads finished' » %s" % (infile,seq,hpvoutfile, tmstamp))
+	if os.path.exists(tmstamp):
+		with open(tmstamp,mode='a+') as first:
+			first.write(" in %s seconds\n" % (time.time() - start_time))
+			print('viral reads collected from SAM file')
+	else:
+		print('grepViralReads failed for file %s (((' % file)
 
-def grepMates(infile,nomateinfile,mateoutfile):
+
+def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
 	'''
 	in: full SAM file AND file with grep'ed viral reads
 	out: SAM file with viral reads and their mates
 	'''
+	start_time = time.time()
 	print('collecting mates...')
 	#1) collect read names
+
 	HPVreads=[]
 	with pysam.AlignmentFile(nomateinfile,'r') as sam:
 		for read in sam:
@@ -53,8 +63,15 @@ def grepMates(infile,nomateinfile,mateoutfile):
 	#https://www.biostars.org/p/68358/ claims that grep like 'LC_ALL=C grep -w -F -f temp_hpv_reads_id.txt < infile > outfile could be faster but
 	#a) I have no idea how LC_ALL=C could help
 	#b) it's actually slower than the variant below
-	os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s" % (infile,mateoutfile))
-	print('all viral reads and their mates are collected from SAM file')
+	#os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s" % (infile,mateoutfile))
+	os.system("samtools view -H %s > %s" % (infile,mateoutfile))
+	os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s && echo 'grep mates finished' >> %s" % (infile,mateoutfile,tmstamp))
+	if "grep mates finished" in open(tmst).read():
+		with open(tmst,mode='a+') as second:
+			second.write(" in %s seconds" % (time.time() - start_time))
+		print('all viral reads and their mates are collected from SAM file')
+	else:
+		print('grepMates failed for file %s' % file)
 	os.remove('temp_hpv_reads_id.txt')
 
 
@@ -77,18 +94,12 @@ def main():
 				tmst=re.sub('bam$', 'timestamp', bamfile)
 				#check if we already have the results and run scripts for missing files
 				if not os.path.exists(tmst):
-					start_time = time.time()
-					grepViralReads(bamfile,'NC_001526',HPVoutfile)
-					with open(tmst,mode='w') as first:
-						first.write("grep HPV reads finished in %s seconds" % (time.time() - start_time))
+					grepViralReads(bamfile,'NC_001526',HPVoutfile,tmst)
 				else:
 					print('HPV reads already present')
 						
-				if "grep mates finished" not in open(tmst).read():
-					start_time = time.time()
+				if os.path.exists(tmst) and "grep mates finished" not in open(tmst).read():
 					grepMates(bamfile,HPVoutfile,HPVwithmatesoutfile)
-					with open(tmst,mode='a+') as second:
-						second.write("grep mates finished in %s seconds" % (time.time() - start_time))
 				else:
 					print('mates already present')
 				
