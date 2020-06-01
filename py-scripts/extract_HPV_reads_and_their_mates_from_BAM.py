@@ -32,7 +32,7 @@ def grepViralReads(infile, seq, hpvoutfile, tmstamp):
 	#copy header and grep all viral reads from sam file
 	os.system("samtools view -H %s > %s" % (infile,outfile))
 	#os.system("samtools view -h %s | fgrep %s - > %s" % (infile,seq,hpvoutfile))
-	os.system("samtools view %s | fgrep %s - >> %s && echo 'grep HPV reads finished' » %s" % (infile,seq,hpvoutfile, tmstamp))
+	os.system("samtools view %s | fgrep %s - >> %s && echo 'grep HPV reads finished' >> %s" % (infile,seq,hpvoutfile, tmstamp))
 	if os.path.exists(tmstamp):
 		with open(tmstamp,mode='a+') as first:
 			first.write(" in %s seconds\n" % (time.time() - start_time))
@@ -65,7 +65,7 @@ def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
 	#b) it's actually slower than the variant below
 	#os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s" % (infile,mateoutfile))
 	os.system("samtools view -H %s > %s" % (infile,mateoutfile))
-	os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s && echo 'grep mates finished' >> %s" % (infile,mateoutfile,tmstamp))
+	os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - >> %s && echo 'grep mates finished' >> %s" % (infile,mateoutfile,tmstamp))
 	if "grep mates finished" in open(tmst).read():
 		with open(tmst,mode='a+') as second:
 			second.write(" in %s seconds" % (time.time() - start_time))
