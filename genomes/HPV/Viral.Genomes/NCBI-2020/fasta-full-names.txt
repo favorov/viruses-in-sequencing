@@ -1,3 +1,11 @@
 >NC_001526.4 Human papillomavirus type 16, complete genome
 >M12732.1 Human papillomavirus type 33, complete genome
 >M74117.1 Human papillomavirus type 35 complete genome
+>NC_001591.1 Human papillomavirus type 49, complete genome
+>KT725857.1 Human papillomavirus type 51 isolate HPV51-155-24, complete genome
+>LC373207.1 Human papillomavirus type 52 TK094 DNA, complete genome
+>KX514418.1 Human papillomavirus type 56 isolate 60B, complete genome
+>KY225967.1 Human papillomavirus type 58 isolate ZWE051402, complete genome
+>KC470266.1 Human papillomavirus type 59 isolate Qv33361, complete genome
+>LC511686.1 Human papillomavirus type 66 TK130 DNA, complete genome
+>KX514431.1 Human papillomavirus type 68 isolate 295, complete genome
