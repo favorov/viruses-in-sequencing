@@ -3,6 +3,8 @@
 >KX514430.1 Human papillomavirus type 31 isolate 295, complete genome
 >M12732.1 Human papillomavirus type 33, complete genome
 >M74117.1 Human papillomavirus type 35 complete genome
+>KX514417.1 Human papillomavirus type 39 isolate 16B, complete genome
+>KC470260.1 Human papillomavirus type 45 isolate Qv34163, complete genome
 >NC_001591.1 Human papillomavirus type 49, complete genome
 >KT725857.1 Human papillomavirus type 51 isolate HPV51-155-24, complete genome
 >LC373207.1 Human papillomavirus type 52 TK094 DNA, complete genome
