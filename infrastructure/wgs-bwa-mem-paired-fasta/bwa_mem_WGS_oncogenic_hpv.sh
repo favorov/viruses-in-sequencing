@@ -6,10 +6,11 @@
 #echo current folder
 echo "current folder is $PWD"
 
+tag="oncogenic_hpv"
 
 WGSdir="/home/favorov/Califano/WGS/F15FTSUSAT0806_HUMbxtR/"
-reference="/home/favorov/reference/chimeric_hg38+hpv16/bwa_index/chimericHG38.fa"
-outputdir="/home/favorov/Dasha/JHU-WGS-HPV/chimeric-bams/"
+reference="/home/favorov/reference/NCBI_hpv/hpv-oncogenic/bwa-index/hpv-oncogenic.fa"
+outputdir="/home/favorov/Dasha/JHU-WGS-HPV/hpv-oncogenic/bams/"
 list=('8521512003243' '8521512003248' '8521512003263' '8521512003271' '8521512003274' '8521512003277' '8521512003280' '8521512003281' '8521512003282' '8521512003284' '8521512003288' '8521512003289' '8521512003292' '8521512003293' '8521512003298' '8521512003300' '8521512003301' '8521512003311' '8521512003313' '8521512003318' '8521512003323' '8521512003328' '8521512003330' '8521512003333' '8521512003336' '8521512003337' '8521512003338' '8521512003339' '8521512003340' '8521512003341')
 
 
@@ -29,7 +30,7 @@ for sample in ${list[@]}
 		do
 		echo "qsub run_bwa_mem_WGS_hg38+hpv16.sh $wgs1 $iter $outputdir $reference $sample"
 		#qsub  -o $outputdir -e $outputdir -v wgs1=$wgs1,iter=$iter,outputdir=$outputdir,reference=$reference,sample=$sample run_bwa_mem_WGS_hg38+hpv16.sh	
-		qsub  -v wgs1=$wgs1,iter=$iter,outputdir=$outputdir,reference=$reference,sample=$sample run_bwa_mem_WGS_hg38+hpv16.sh	
+		qsub  -v wgs1=$wgs1,iter=$iter,outputdir=$outputdir,reference=$reference,sample=$sample,tag=$tag run_bwa_mem_WGS_paired_fasta.sh
 		((iter++))
 		done
 	done
