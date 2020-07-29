@@ -34,7 +34,7 @@ def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 	eoptions=" -e ".join(virlist)
 	print('collecting HPV reads...')
 	#copy header and grep all viral reads from sam file
-	os.system("samtools view -H %s > %s" % (infile,outfile))
+	os.system("samtools view -H %s > %s" % (infile,hpvoutfile))
 	#os.system("samtools view -h %s | fgrep %s - > %s" % (infile,seq,hpvoutfile))
 	os.system("samtools view %s | fgrep %s - >> %s && echo 'grep HPV reads finished' >> %s" % (infile,eoptions,hpvoutfile, tmstamp))
 	if os.path.exists(tmstamp):
