@@ -124,7 +124,7 @@ def main():
 					print('HPV reads already present')
 						
 				if os.path.exists(tmst) and "grep mates finished" not in open(tmst).read():
-					grepMates(bamfile,HPVoutfile,HPVwithmatesoutfile)
+					grepMates(bamfile,HPVoutfile,HPVwithmatesoutfile,tmst)
 				else:
 					print('mates already present')
 				
