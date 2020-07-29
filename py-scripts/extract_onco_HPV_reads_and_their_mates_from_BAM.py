@@ -5,6 +5,8 @@
 #extracts everything to .
 # tha bam folder is ./bams that we make with a link befor starting the script - it is the easiest flexibility
 
+#module load samtools/1.6.0
+
 import os
 import sys
 import glob
