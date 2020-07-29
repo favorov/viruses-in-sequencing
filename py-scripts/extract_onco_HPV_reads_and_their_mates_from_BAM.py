@@ -31,7 +31,7 @@ def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 	'''
 	start_time = time.time()
 	virlist.insert(0,'') #add first "" to get the -e options list starting with -e
-	eoptions=" -e ".join(virlist))
+	eoptions=" -e ".join(virlist)
 	print('collecting HPV reads...')
 	#copy header and grep all viral reads from sam file
 	os.system("samtools view -H %s > %s" % (infile,outfile))
