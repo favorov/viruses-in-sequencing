@@ -4,6 +4,8 @@
 #$ 
 #extracts everything to .
 # tha bam folder is ./bams that we make with a link befor starting the script - it is the easiest flexibility
+#the output folder is the current
+#timestamps live is ./stamps
 
 #module load samtools/1.6.0
 
@@ -24,7 +26,6 @@ dir with sorted and indexed BAM files with alignments against HG38+HPV
 Output:
 files with viral reads and their pairs sample.HPV.sam and sample.HPV_with_mates.sam
 '''
-
 
 def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 	'''
@@ -104,6 +105,8 @@ def main():
 	samples=['8521512003243','8521512003248','8521512003263','8521512003271','8521512003274','8521512003277','8521512003280','8521512003281','8521512003282','8521512003284','8521512003288','8521512003289','8521512003292','8521512003293','8521512003298','8521512003300','8521512003301','8521512003311','8521512003313','8521512003318','8521512003323','8521512003328','8521512003330','8521512003333','8521512003336','8521512003337','8521512003338','8521512003339','8521512003340','8521512003341']
 	#virlist=['NC_001526']
 	virlist=['NC_001526', 'NC_001357', 'KX514430', 'M12732', 'M74117', 'KX514417', 'KC470260', 'NC_001591', 'KT725857', 'LC373207', 'KX514418', 'KY225967', 'KC470266', 'LC511686', 'KX514431']
+	outdir="./"
+	stampdir=outdir+"stamps/"
 	for sample in samples:
 		list=glob.glob(bamdir+sample+'_[0-9].bam')
 		if not list:
@@ -114,9 +117,10 @@ def main():
 			#print(*list, sep='\n')
 			for bamfile in list:
 				print("Current file is "+bamfile)
-				HPVoutfile=re.sub('bam$', 'HPV.sam', bamfile)
-				HPVwithmatesoutfile=re.sub('bam$', 'HPV_with_mates.sam', bamfile)
-				tmst=re.sub('bam$', 'timestamp', bamfile)
+				bamfilename=os.path.basename(bamfilename)
+				HPVoutfile=outdir+re.sub('bam$', 'HPV.sam', bamfilename)
+				HPVwithmatesoutfile=outdir+re.sub('bam$', 'HPV_with_mates.sam', bamfilename)
+				tmst=stampdir+re.sub('bam$', 'timestamp', bamfilename)
 				#check if we already have the results and run scripts for missing files
 				if not os.path.exists(tmst):
 					grepViralReads(bamfile,virlist,HPVoutfile,tmst)
