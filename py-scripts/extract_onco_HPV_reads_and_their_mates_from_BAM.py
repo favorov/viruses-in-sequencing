@@ -47,7 +47,7 @@ def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 		print('grepViralReads failed for file %s (((' % file)
 
 
-def grepMates(infile,nomateinfile,mateoutfile,tmst):
+def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
 	'''
 	in: full SAM file AND file with grep'ed viral reads
 	out: SAM file with viral reads and their mates
@@ -72,8 +72,8 @@ def grepMates(infile,nomateinfile,mateoutfile,tmst):
 	#os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s" % (infile,mateoutfile))
 	os.system("samtools view -H %s > %s" % (infile,mateoutfile))
 	os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - >> %s && echo 'grep mates finished' >> %s" % (infile,mateoutfile,tmstamp))
-	if "grep mates finished" in open(tmst).read():
-		with open(tmst,mode='a+') as second:
+	if "grep mates finished" in open(tmstamp).read():
+		with open(tmstamp,mode='a+') as second:
 			second.write(" in %s seconds" % (time.time() - start_time))
 		print('all viral reads and their mates are collected from SAM file')
 	else:
