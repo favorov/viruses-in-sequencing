@@ -108,15 +108,15 @@ def main():
 	outdir="./"
 	stampdir=outdir+"stamps/"
 	try:
-    os.makedirs(outdir)
+		os.makedirs(outdir)
 	except OSError as e:
-			if e.errno != errno.EEXIST:
-					raise
+		if e.errno != errno.EEXIST:
+			raise
 	try:
-    os.makedirs(stampdir)
+		os.makedirs(stampdir)
 	except OSError as e:
-			if e.errno != errno.EEXIST:
-					raise
+		if e.errno != errno.EEXIST:
+			raise
 	for sample in samples:
 		list=glob.glob(bamdir+sample+'_[0-9].bam')
 		if not list:
