@@ -117,8 +117,8 @@ def main():
 			#print(*list, sep='\n')
 			for bamfile in list:
 				print("Current file is "+bamfile)
-				bamfilename=os.path.basename(bamfilename)
-				HPVoutfile=outdir+re.sub('bam$', 'HPV.sam', bamfile)
+				bamfilename=os.path.basename(bamfile)
+				HPVoutfile=outdir+re.sub('bam$', 'HPV.sam', bamfilename)
 				HPVwithmatesoutfile=outdir+re.sub('bam$', 'HPV_with_mates.sam', bamfilename)
 				tmst=stampdir+re.sub('bam$', 'timestamp', bamfilename)
 				#check if we already have the results and run scripts for missing files
