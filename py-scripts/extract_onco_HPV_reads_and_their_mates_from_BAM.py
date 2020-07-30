@@ -77,7 +77,7 @@ def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
 			second.write(" in %s seconds" % (time.time() - start_time))
 		print('all viral reads and their mates are collected from SAM file')
 	else:
-		print('grepMates failed for file %s' % file)
+		print('grepMates failed for file %s' % infile)
 	os.remove('temp_hpv_reads_id.txt')
 
 #>NC_001526.4 Human papillomavirus type 16, complete genome
