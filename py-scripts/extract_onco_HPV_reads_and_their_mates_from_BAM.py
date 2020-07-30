@@ -47,7 +47,7 @@ def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 		print('grepViralReads failed for file %s (((' % file)
 
 
-def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
+def grepMates(infile,nomateinfile,mateoutfile,tmst):
 	'''
 	in: full SAM file AND file with grep'ed viral reads
 	out: SAM file with viral reads and their mates
