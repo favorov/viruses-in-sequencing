@@ -45,7 +45,7 @@ def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 			first.write(" in %s seconds\n" % (time.time() - start_time))
 			print('viral reads collected from SAM file')
 	else:
-		print('grepViralReads failed for file %s (((' % file)
+		print('grepViralReads failed for file %s (((' % infile)
 
 
 def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
@@ -107,6 +107,16 @@ def main():
 	virlist=['NC_001526', 'NC_001357', 'KX514430', 'M12732', 'M74117', 'KX514417', 'KC470260', 'NC_001591', 'KT725857', 'LC373207', 'KX514418', 'KY225967', 'KC470266', 'LC511686', 'KX514431']
 	outdir="./"
 	stampdir=outdir+"stamps/"
+	try:
+    os.makedirs(outdir)
+	except OSError as e:
+			if e.errno != errno.EEXIST:
+					raise
+	try:
+    os.makedirs(stampdir)
+	except OSError as e:
+			if e.errno != errno.EEXIST:
+					raise
 	for sample in samples:
 		list=glob.glob(bamdir+sample+'_[0-9].bam')
 		if not list:
