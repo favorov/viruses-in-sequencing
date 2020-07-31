@@ -27,14 +27,12 @@ Output:
 files with viral reads and their pairs sample.HPV.sam and sample.HPV_with_mates.sam
 '''
 
-def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
+def grepViralReads(infile, eoptions, hpvoutfile, tmstamp):
 	'''
 	in:SAM file (and viral sequence name for grep)
 	out:SAM with header with viral reads, SAM with header with viral reads and their pairs
 	'''
 	start_time = time.time()
-	virlist.insert(0,'') #add first "" to get the -e options list starting with -e
-	eoptions=" -e ".join(virlist)
 	print('collecting HPV reads...')
 	#copy header and grep all viral reads from sam file
 	cmd="samtools view -H %s > %s" % (infile,hpvoutfile)
@@ -114,6 +112,8 @@ def main():
 	virlist=['NC_001526', 'NC_001357', 'KX514430', 'M12732', 'M74117', 'KX514417', 'KC470260', 'NC_001591', 'KT725857', 'LC373207', 'KX514418', 'KY225967', 'KC470266', 'LC511686', 'KX514431']
 	outdir="./"
 	stampdir=outdir+"stamps/"
+	virlist.insert(0,'') #add first "" to get the -e options list starting with -e
+	eoptions=" -e ".join(virlist)
 	for sample in samples:
 		list=glob.glob(bamdir+sample+'_[0-9].bam')
 		if not list:
@@ -130,7 +130,7 @@ def main():
 				tmst=stampdir+re.sub('bam$', 'timestamp', bamfilename)
 				#check if we already have the results and run scripts for missing files
 				if not os.path.exists(tmst):
-					grepViralReads(bamfile,virlist,HPVoutfile,tmst)
+					grepViralReads(bamfile,eoptions,HPVoutfile,tmst)
 				else:
 					print('HPV reads already present')
 						
