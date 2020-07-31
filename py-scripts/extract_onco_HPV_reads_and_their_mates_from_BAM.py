@@ -37,9 +37,12 @@ def grepViralReads(infile, virlist, hpvoutfile, tmstamp):
 	eoptions=" -e ".join(virlist)
 	print('collecting HPV reads...')
 	#copy header and grep all viral reads from sam file
-	os.system("samtools view -H %s > %s" % (infile,hpvoutfile))
-	#os.system("samtools view -h %s | fgrep %s - > %s" % (infile,seq,hpvoutfile))
-	os.system("samtools view %s | fgrep %s - >> %s && echo 'grep HPV reads finished' >> %s" % (infile,eoptions,hpvoutfile, tmstamp))
+	cmd="samtools view -H %s > %s" % (infile,hpvoutfile)
+	print(cmd)
+	os.system(cmd)
+	cmd="samtools view %s | fgrep %s - >> %s && echo 'grep HPV reads finished' >> %s" % (infile,eoptions,hpvoutfile, tmstamp)
+	print(cmd)
+	os.system(cmd)
 	if os.path.exists(tmstamp):
 		with open(tmstamp,mode='a+') as first:
 			first.write(" in %s seconds\n" % (time.time() - start_time))
@@ -71,8 +74,12 @@ def grepMates(infile,nomateinfile,mateoutfile,tmstamp):
 	#a) I have no idea how LC_ALL=C could help
 	#b) it's actually slower than the variant below
 	#os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - > %s" % (infile,mateoutfile))
-	os.system("samtools view -H %s > %s" % (infile,mateoutfile))
-	os.system("samtools view %s | fgrep -f temp_hpv_reads_id.txt - >> %s && echo 'grep mates finished' >> %s" % (infile,mateoutfile,tmstamp))
+	cmd="samtools view -H %s > %s" % (infile,mateoutfile)
+	print(cmd)
+	os.system(cmd)
+	cmd="samtools view %s | fgrep -f temp_hpv_reads_id.txt - >> %s && echo 'grep mates finished' >> %s" % (infile,mateoutfile,tmstamp)
+	print(cmd)
+	os.system(cmd)
 	if "grep mates finished" in open(tmstamp).read():
 		with open(tmstamp,mode='a+') as second:
 			second.write(" in %s seconds" % (time.time() - start_time))
