@@ -48,11 +48,11 @@ def main():
 		else:
 			print("sample %s: %s files" % (sample,len(list)))
 			#create temporary file storing list of bam file for each sample
-			outfile=bamdir+sample+'.coverage.tab'
-			listfile=bamdir+sample+'list.txt'
+			outfile=sample+'.coverage.tab'
+			listfile=sample+'list.txt'
 			with open(listfile, 'w') as f:
 				[f.write("%s\n" % bamfile) for bamfile in list]
-			tmst=bamdir+sample+'_coverage.tmst'
+			tmst=sample+'_coverage.tmst'
 			#check if we already have the results and run scripts for missing files
 			if not os.path.exists(tmst):
 				calculateCoverage(listfile,outfile,tmst)
