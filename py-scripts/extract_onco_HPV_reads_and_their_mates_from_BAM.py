@@ -112,6 +112,9 @@ def main():
 	virlist=['NC_001526', 'NC_001357', 'KX514430', 'M12732', 'M74117', 'KX514417', 'KC470260', 'NC_001591', 'KT725857', 'LC373207', 'KX514418', 'KY225967', 'KC470266', 'LC511686', 'KX514431']
 	outdir="./"
 	stampdir=outdir+"stamps/"
+	if not os.path.exists(stampdir):
+		os.makedirs(stampdir)
+	#create stampdir if it does not exist
 	virlist.insert(0,'') #add first "" to get the -e options list starting with -e
 	eoptions=" -e ".join(virlist)
 	for sample in samples:
